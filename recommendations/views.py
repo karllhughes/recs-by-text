@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from twilio.twiml.messaging_response import MessagingResponse
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from .sms_parser import SmsParser
+from .action_dispatcher import ActionDispatcher
+from .sms_response_generator import SmsResponseGenerator
 # Create your views here.
 def home(request):
     pass 
@@ -10,13 +11,16 @@ def home(request):
 @csrf_exempt
 def hello(request):
     if request.POST: 
-        resp = MessagingResponse()
-        mess = request.POST
-        print(mess['From'])
-        print(mess['To'])
-        print(mess['Body'])
-
-        resp.message("The Robots are coming! Head for the hills!")
+        try:
+            action_template = SmsParser.parse(request.POST['Body'], request.POST['From'])
+            action_response = ActionDispatcher.dispatch(action_template)
+        except Exception as e:
+            action_response = {'message': str(e)}
+            
+        response = SmsResponseGenerator.generate(action_response)
     else: 
-        resp = 'this did not work'
-    return HttpResponse(str(resp))
+        response = 'this did not work'
+    return HttpResponse(str(response))
+
+
+
