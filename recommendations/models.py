@@ -10,7 +10,7 @@ class Recommendation(models.Model):
     recommender = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='recommendations_made')
     recommendee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recommendations_recieved')
     name = models.CharField(validators=[MinLengthValidator(1)], max_length=255)
-    context = models.TextField()
+    context = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     accepted = models.BooleanField(default=False)
 
