@@ -14,7 +14,7 @@ class Recommendation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     accepted = models.BooleanField(default=False)
 
-class TrustedUser: 
+class TrustedUser(models.Model): 
     original_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     trusted_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='trusted_user')
     created_at = models.DateTimeField(auto_now_add=True)
