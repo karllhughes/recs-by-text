@@ -16,7 +16,8 @@ class SmsParser:
             username = message.split(' ')[-1]
             name = ' '.join(message.split(' ')[1:-2])
             response = {'action' : ACTIONS_LIST['create_recommendation_for_another_user'], 'payload' : {'name': name, 'recommender_phone': phone, 'recommendee_username': username}}
-        
+        elif cls.is_recommendation_acception(message):
+            response = {'action': ACTIONS_LIST['accept_recommendation_from_another_user'], 'payload': {'recommendation_id': message[1:], 'phone': phone}}
         else:
             raise ValueError('Message could not be parsed.')
         
@@ -24,16 +25,34 @@ class SmsParser:
             
     @classmethod
     def is_recommendation_for_another_user(cls,message):
-        message_array = message.split(' ')
-        last_word = message_array[-1]
-        second_to_last_word = message_array[-2]
-        first_word = message_array[0]
-        return first_word == 'recommend' and second_to_last_word == 'to' and last_word != 'me'
+        try:
+            message_array = message.split(' ')
+            last_word = message_array[-1]
+            second_to_last_word = message_array[-2]
+            first_word = message_array[0]
+            return first_word.lower() == 'recommend' and second_to_last_word.lower() == 'to' and last_word.lower() != 'me'
+        except Exception as e:
+            return False 
 
     @classmethod
     def is_recommendation_for_me(cls,message):
-        return message[:10].lower() == 'recommend ' and message[-6:].lower() == ' to me'
+        try: 
+            return message[:10].lower() == 'recommend ' and message[-6:].lower() == ' to me'
+        except Exception as e:
+            return False
     
     @classmethod
     def is_create_new_user(cls,message):
-        return message[:5].lower() == 'i am '
+        try: 
+            return message[:5].lower() == 'i am '
+        except Exception as e:
+            return False
+    
+    @classmethod
+    def is_recommendation_acception(cls, message):
+        try: 
+            return message[0].lower() == 'r' and message[1:].isdigit()
+        except Exception as e: 
+            return False
+
+

@@ -17,7 +17,7 @@ class CreateRecommendationForAnotherUser:
         if is_trusted: 
             SmsSender.send_to_user(recommendee, f"{recommender.username} recommended '{recommendation.name}' to you.")
         else: 
-            pass
+            SmsSender.send_to_user(recommendee, f"{recommender.username} recommended '{recommendation.name}' to you. Text back 'r{recommendation.id}' if you would like to add this recommendation and them as a trusted user?")            
         return {'message': f"'{recommendation.name}' was recommended to {recommendee.username}."}
 
     @classmethod
