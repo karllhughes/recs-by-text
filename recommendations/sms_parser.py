@@ -1,5 +1,14 @@
 from .actions_list import ACTIONS_LIST
 
+def exception_returns_false(func):
+    def catch_errors(cls, message):
+        try: 
+            func(cls, message)
+        except Exception as e:
+            return False
+    
+    return catch_errors
+
 class SmsParser:
 
     @classmethod
@@ -22,37 +31,30 @@ class SmsParser:
             raise ValueError('Message could not be parsed.')
         
         return response
-            
+    
     @classmethod
+    @exception_returns_false
     def is_recommendation_for_another_user(cls,message):
-        try:
-            message_array = message.split(' ')
-            last_word = message_array[-1]
-            second_to_last_word = message_array[-2]
-            first_word = message_array[0]
-            return first_word.lower() == 'recommend' and second_to_last_word.lower() == 'to' and last_word.lower() != 'me'
-        except Exception as e:
-            return False 
-
+        message_array = message.split(' ')
+        last_word = message_array[-1]
+        second_to_last_word = message_array[-2]
+        first_word = message_array[0]
+        return first_word.lower() == 'recommend' and second_to_last_word.lower() == 'to' and last_word.lower() != 'me'
+       
     @classmethod
+    @exception_returns_false
     def is_recommendation_for_me(cls,message):
-        try: 
-            return message[:10].lower() == 'recommend ' and message[-6:].lower() == ' to me'
-        except Exception as e:
-            return False
+        return message[:10].lower() == 'recommend ' and message[-6:].lower() == ' to me'
+        
     
     @classmethod
+    @exception_returns_false
     def is_create_new_user(cls,message):
-        try: 
-            return message[:5].lower() == 'i am '
-        except Exception as e:
-            return False
+        return message[:5].lower() == 'i am '
+        
     
     @classmethod
+    @exception_returns_false
     def is_recommendation_acception(cls, message):
-        try: 
-            return message[0].lower() == 'r' and message[1:].isdigit()
-        except Exception as e: 
-            return False
-
-
+        return message[0].lower() == 'r' and message[1:].isdigit()
+        
