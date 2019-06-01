@@ -8,4 +8,3 @@ class CreateUserAction:
         user.full_clean()
         user.save()
         return {'message': f"{user.username} created successfully."}
-

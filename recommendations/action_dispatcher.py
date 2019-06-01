@@ -1,8 +1,9 @@
 from .actions_list import ACTIONS_LIST
-from .actions.create_user_action import CreateUserAction
+from .actions.create_user import CreateUserAction
 from .actions.create_recommendation_for_me import CreateRecommendationForMe
 from .actions.create_recommendation_for_another_user import CreateRecommendationForAnotherUser
 from .actions.accept_recommendation_from_another_user import AcceptRecommendationFromAnotherUser
+from .actions.view_list import ViewList
 
 class ActionDispatcher: 
     @classmethod
@@ -16,5 +17,7 @@ class ActionDispatcher:
             return CreateRecommendationForAnotherUser.execute(action_template['payload'])
         elif action == ACTIONS_LIST['accept_recommendation_from_another_user']:
             return AcceptRecommendationFromAnotherUser.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['view_list']:
+            return ViewList.execute(action_template['payload'])
         else: 
             raise ValueError(f"{action_template['action']} is not a valid action.")

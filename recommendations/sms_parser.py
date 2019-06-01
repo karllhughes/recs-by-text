@@ -1,9 +1,10 @@
 from .actions_list import ACTIONS_LIST
+from IPython import embed
 
 def exception_returns_false(func):
     def catch_errors(cls, message):
         try: 
-            func(cls, message)
+            return func(cls, message)
         except Exception as e:
             return False
     
@@ -27,6 +28,8 @@ class SmsParser:
             response = {'action' : ACTIONS_LIST['create_recommendation_for_another_user'], 'payload' : {'name': name, 'recommender_phone': phone, 'recommendee_username': username}}
         elif cls.is_recommendation_acception(message):
             response = {'action': ACTIONS_LIST['accept_recommendation_from_another_user'], 'payload': {'recommendation_id': message[1:], 'phone': phone}}
+        elif cls.is_view_list(message):
+            response = {'action': ACTIONS_LIST['view_list'], 'payload': {'phone': phone}}
         else:
             raise ValueError('Message could not be parsed.')
         
@@ -57,4 +60,9 @@ class SmsParser:
     @exception_returns_false
     def is_recommendation_acception(cls, message):
         return message[0].lower() == 'r' and message[1:].isdigit()
+
+    @classmethod
+    @exception_returns_false
+    def is_view_list(cls, message):
+        return message.strip().lower() == 'list'
         
