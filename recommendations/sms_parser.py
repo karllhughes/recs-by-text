@@ -3,7 +3,7 @@ from .actions_list import ACTIONS_LIST
 def exception_returns_false(func):
     def catch_errors(cls, message):
         try: 
-            func(cls, message)
+            return func(cls, message)
         except Exception as e:
             return False
     
