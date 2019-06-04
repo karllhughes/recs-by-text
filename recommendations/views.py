@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .sms_parser import SmsParser
 from .action_dispatcher import ActionDispatcher
 from .sms_response_generator import SmsResponseGenerator
-# Create your views here.
+
 def home(request):
     pass 
 
