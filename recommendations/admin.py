@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import User, Recommendation, TrustedUser 
 
-# Register your models here.
+admin.site.register(User)
+admin.site.register(Recommendation)
+admin.site.register(TrustedUser)
+
