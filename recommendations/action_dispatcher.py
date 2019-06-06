@@ -5,6 +5,7 @@ from .actions.create_recommendation_for_another_user import CreateRecommendation
 from .actions.accept_recommendation_from_another_user import AcceptRecommendationFromAnotherUser
 from .actions.view_list import ViewList
 from .actions.ask_from_another_user import AskFromAnotherUser
+from .actions.delete_from_list import DeleteFromList
 
 class ActionDispatcher: 
     @classmethod
@@ -22,5 +23,7 @@ class ActionDispatcher:
             return ViewList.execute(action_template['payload'])
         elif action == ACTIONS_LIST['ask_from_another_user']:
             return AskFromAnotherUser.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['delete']:
+            return DeleteFromList.execute(action_template['payload'])
         else: 
             raise ValueError(f"{action_template['action']} is not a valid action.")

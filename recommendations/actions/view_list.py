@@ -5,7 +5,7 @@ class ViewList:
 
     @classmethod 
     def execute(cls, payload):
-        recommendations = User.objects.get(phone=payload['phone']).recommendations_recieved.filter(accepted=True)
+        recommendations = User.objects.get(phone=payload['phone']).recommendations_recieved.filter(accepted=True).order_by('-created_at')
         names = ''
         for i, recommendation in enumerate(recommendations):
             names += f'{i + 1}.  {recommendation.name}\n'
