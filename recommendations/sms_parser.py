@@ -33,6 +33,9 @@ class SmsParser:
         elif cls.is_ask_from_another_user(message):
             askee_username = message[4:]
             response = {'action': ACTIONS_LIST['ask_from_another_user'], 'payload': {'asker_phone': phone, 'askee_username': askee_username}}
+        elif cls.is_delete(message):
+            position_in_list = message[7:]
+            response = {'action': ACTIONS_LIST['delete'], 'payload': {'phone': phone, 'position_in_list': position_in_list}}            
         else:
             raise ValueError('Message could not be parsed.')
         
@@ -73,6 +76,11 @@ class SmsParser:
     @exception_returns_false
     def is_ask_from_another_user(cls, message):
         return message[:4].lower() == 'ask ' 
+
+    @classmethod
+    @exception_returns_false
+    def is_delete(cls, message):
+        return message[:7].lower() == 'delete ' 
         
 
         
