@@ -5,9 +5,6 @@ from .sms_parser import SmsParser
 from .action_dispatcher import ActionDispatcher
 from .sms_response_generator import SmsResponseGenerator
 
-def home(request):
-    return HttpResponse('Hello World') 
-
 @csrf_exempt
 def sms(request):
     if request.POST: 
