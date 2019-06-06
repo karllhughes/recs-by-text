@@ -6,7 +6,7 @@ from .action_dispatcher import ActionDispatcher
 from .sms_response_generator import SmsResponseGenerator
 
 def home(request):
-    pass 
+    return HttpResponse('Hello World') 
 
 @csrf_exempt
 def hello(request):
