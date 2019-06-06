@@ -9,7 +9,7 @@ def home(request):
     return HttpResponse('Hello World') 
 
 @csrf_exempt
-def hello(request):
+def sms(request):
     if request.POST: 
         try:
             action_template = SmsParser.parse(request.POST['Body'], request.POST['From'])
