@@ -30,6 +30,9 @@ class SmsParser:
             response = {'action': ACTIONS_LIST['accept_recommendation_from_another_user'], 'payload': {'recommendation_id': message[1:], 'phone': phone}}
         elif cls.is_view_list(message):
             response = {'action': ACTIONS_LIST['view_list'], 'payload': {'phone': phone}}
+        elif cls.is_ask_from_another_user(message):
+            askee_username = message[4:]
+            response = {'action': ACTIONS_LIST['ask_from_another_user'], 'payload': {'asker_phone': phone, 'askee_username': askee_username}}
         else:
             raise ValueError('Message could not be parsed.')
         
@@ -65,4 +68,11 @@ class SmsParser:
     @exception_returns_false
     def is_view_list(cls, message):
         return message.strip().lower() == 'list'
+
+    @classmethod
+    @exception_returns_false
+    def is_ask_from_another_user(cls, message):
+        return message[:4].lower() == 'ask ' 
+        
+
         
