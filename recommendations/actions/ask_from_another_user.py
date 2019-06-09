@@ -1,7 +1,9 @@
 from recommendations.models import User, TrustedUser
 from recommendations.sms_sender import SmsSender
+from .base_action import BaseAction
 
-class AskFromAnotherUser:
+
+class AskFromAnotherUser(BaseAction):
 
     @classmethod
     def execute(cls, payload):
@@ -12,6 +14,8 @@ class AskFromAnotherUser:
             TrustedUser.objects.create(original_user=asker, trusted_user=askee)
 
     
-        SmsSender.send_to_user(askee, f"{asker.username} asked for a recommendation. To send one, text 'recommend XXXX to {asker.username}'.")           
+        SmsSender.send_to_user(askee, f"{asker.username} asked for a recommendation. To send one, text 'recommend XXXX to {asker.username}'.")
+        super().clear_recommendation_id(payload['session'])
+
         return {'message': f"'{askee.username}' was asked for a recommendation."}
 
