@@ -4,6 +4,10 @@ from .actions.create_recommendation_for_me import CreateRecommendationForMe
 from .actions.create_recommendation_for_another_user import CreateRecommendationForAnotherUser
 from .actions.accept_recommendation_from_another_user import AcceptRecommendationFromAnotherUser
 from .actions.view_list import ViewList
+from .actions.ask_from_another_user import AskFromAnotherUser
+from .actions.delete_from_list import DeleteFromList
+from .actions.add_context_to_recommendation import AddContextToRecommendation
+from .actions.view_single_recommendation import ViewSingleRecommendation
 
 class ActionDispatcher: 
     @classmethod
@@ -19,5 +23,13 @@ class ActionDispatcher:
             return AcceptRecommendationFromAnotherUser.execute(action_template['payload'])
         elif action == ACTIONS_LIST['view_list']:
             return ViewList.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['ask_from_another_user']:
+            return AskFromAnotherUser.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['delete']:
+            return DeleteFromList.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['add_context']:
+            return AddContextToRecommendation.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['view_single_recommendation']: 
+            return ViewSingleRecommendation.execute(action_template['payload'])
         else: 
             raise ValueError(f"{action_template['action']} is not a valid action.")

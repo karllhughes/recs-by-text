@@ -6,13 +6,13 @@ from .action_dispatcher import ActionDispatcher
 from .sms_response_generator import SmsResponseGenerator
 
 def home(request):
-    pass 
+    return HttpResponse('Hello World') 
 
 @csrf_exempt
-def hello(request):
+def sms(request):
     if request.POST: 
         try:
-            action_template = SmsParser.parse(request.POST['Body'], request.POST['From'])
+            action_template = SmsParser.parse(request.POST['Body'], request.POST['From'], request.session)
             action_response = ActionDispatcher.dispatch(action_template)
         except Exception as e:
             action_response = {'message': str(e)}
@@ -21,6 +21,3 @@ def hello(request):
     else: 
         response = 'this did not work'
     return HttpResponse(str(response))
-
-
-
