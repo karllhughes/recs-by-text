@@ -1,4 +1,4 @@
-# Movies By Phone
+# RecsByText
 
 Recommend movies to your friends and ask them for recommendations all through a convenient SMS interface.
 
@@ -8,85 +8,56 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You should have the following installed:
+You should have the following installed on your local machine:
 
-- Python 3.X
-- Postgres 9.X
-- [Twilio account](#)
-- [ngrok](#)
+- Python 3.X with pip
+- Postgres 11.X
+- [ngrok](https://ngrok.com/)
 
-```
-# Coming soon
-```
+This app uses [Twilio](https://www.twilio.com/) to send and receive messages, so you will need an account, phone number, and API key.
 
-### Installing
+### Running Locally
 
-A step by step series of examples that tell you how to get a development env running
+- Make sure Postgres is running and a database is created using the credentials in `./moviesByPhone/settings.py`.
+- Clone this repository and navigate to the directory:
 
-Say what the step will be
-
-```
-Give the example
+```bash
+git clone karllhughes/movies-by-phone
+cd movies-by-phone
 ```
 
-And repeat
+- Install dependencies with pip: `pip install -r requirements.txt`
+- Sync and migrate the database:
 
-```
-until finished
+```bash
+python ./manage.py syncdata
+python ./manage.py migrate
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+- (Optional) Create a superuser for your admin panel: `python ./manage.py createsuperuser`
+- Run the server: `python ./manage.py runserver`
+
+The app will now be running, and you can check out the landing page at [localhost:8000](http://localhost:8000/).
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+Coming soon!
 
 ### And coding style tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+Coming soon!
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Contributions are welcome! Please create an issue first to solicit discussion, then make a pull request with your improvements.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+- [Josh Alletto](https://github.com/jalletto)
+- [Karl Hughes](https://github.com/karllhughes)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/karllhughes/movies-by-phone/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
