@@ -26,6 +26,7 @@ git clone karllhughes/movies-by-phone
 cd movies-by-phone
 ```
 
+- Set up a virtual environment: `python -m venv venv`
 - Install dependencies with pip: `pip install -r requirements.txt`
 - Sync and migrate the database:
 
