@@ -10,6 +10,11 @@ class CreateRecommendationForMe(BaseAction):
         recommendation = Recommendation(recommender=user, recommendee=user, name=payload['name'], accepted=True)
         recommendation.full_clean()
         recommendation.save()
-        super().clear_recommendation_id(payload['session'])
 
-        return {'message': f"'{recommendation.name}' was added to your list."}
+        cls.set_recommendation_id_in_session(payload['session'], recommendation)
+
+        return {'message': f"'{recommendation.name}' was added to your list. Reply to add context."}
+
+    @classmethod
+    def set_recommendation_id_in_session(cls, session, recommendation):
+        session['latest_recommendation_id'] = recommendation.id
