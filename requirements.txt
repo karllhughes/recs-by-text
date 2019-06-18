@@ -8,6 +8,7 @@ Django==2.2.1
 django-extensions==2.1.7
 django-heroku==0.3.1
 gunicorn==19.9.0
+heroku==0.1.4
 idna==2.8
 ipython==7.5.0
 ipython-genutils==0.2.0
