@@ -35,4 +35,3 @@ class CreateRecommendationForAnotherUser(BaseAction):
     @classmethod
     def set_recommendation_id_in_session(cls, session, recommendation):
         session['latest_recommendation_id'] = recommendation.id
-

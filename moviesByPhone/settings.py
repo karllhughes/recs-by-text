@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recommendations',
     'django_extensions',
+    'moviesByPhone'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'moviesByPhone',
-        'USER': 'admin',
+        # 'USER': 'admin',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '5432',
