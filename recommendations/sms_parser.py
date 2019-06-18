@@ -22,6 +22,9 @@ class SmsParser:
         elif cls.is_recommendation_for_me(message):
             name = message[10:-6]
             response = {'action': ACTIONS_LIST['create_recommendation_for_me'], 'payload': {'name': name, 'phone': phone, 'session': session}}
+        elif cls.is_rec_for_me(message):
+            name = message[4:-6]
+            response = {'action': ACTIONS_LIST['create_recommendation_for_me'], 'payload': {'name': name, 'phone': phone, 'session': session}}
         elif cls.is_recommendation_for_another_user(message):
             username = message.split(' ')[-1]
             name = ' '.join(message.split(' ')[1:-2])
@@ -53,14 +56,18 @@ class SmsParser:
         last_word = message_array[-1]
         second_to_last_word = message_array[-2]
         first_word = message_array[0]
-        return first_word.lower() == 'recommend' and second_to_last_word.lower() == 'to' and last_word.lower() != 'me'
+        return (first_word.lower() == 'recommend' or first_word.lower() == 'rec') and second_to_last_word.lower() == 'to' and last_word.lower() != 'me'
        
     @classmethod
     @exception_returns_false
     def is_recommendation_for_me(cls,message, session):
         return message[:10].lower() == 'recommend ' and message[-6:].lower() == ' to me'
+
+    @classmethod
+    @exception_returns_false
+    def is_rec_for_me(cls,message, session):
+        return message[:4].lower() == 'rec ' and message[-6:].lower() == ' to me'
         
-    
     @classmethod
     @exception_returns_false
     def is_create_new_user(cls,message, session):
