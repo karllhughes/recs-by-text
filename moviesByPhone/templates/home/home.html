@@ -8,8 +8,10 @@
   <style>
 
     body {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      color: white;
+      background-color: black;
     }
     #examples {
       font-family: "Helvetica Neue";
@@ -20,6 +22,8 @@
       padding: 0 8% 0 8%;
       margin: 0;
       align-self: center;
+      grid-column: 2/3;
+  
     }
 
     #app-title {
@@ -42,6 +46,7 @@
       position:absolute;
       bottom:-2px;
       height:20px;
+      
     }
     
     .sent-text-message {
@@ -60,7 +65,7 @@
     .sent-text-message:after {
       right:-56px;
       width:26px;
-      background:white;
+      background: black;
       border-bottom-left-radius: 10px;
       transform:translate(-30px, -2px);
     }
@@ -79,7 +84,7 @@
     .received-text-message:after {
       left:4px;
       width:26px;
-      background:white;
+      background:black;
       border-bottom-right-radius: 10px;
       transform:translate(-30px, -2px);
     }
@@ -91,7 +96,7 @@
     <h1 id='app-title'>Recs By Text</h1>
     <section id='sign-up'>
       <h2>Creating an Account</h2>
-      <p>Creating an account is easy. Just text 'I am ' followed by your username. Usernames must be one word.</p>
+      <p>Creating an account is easy. Just text 'I am ' followed by your username to 1-(301)-300-3110. Usernames must be one word.</p>
       <p class='text-message sent-text-message'>I am karl</p>
       <p class='text-message received-text-message'>karl successfully created</p>
     </section>
