@@ -4,24 +4,172 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Recs By Text</title>
   <style>
+
+    body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      color: white;
+      background-color: black;
+    }
+    #examples {
+      font-family: "Helvetica Neue";
+      font-size: 20px;
+      font-weight: normal;
+      max-width: 450px;
+      margin: 50px auto;
+      padding: 0 2% 5% 2%;
+      margin: 0;
+      align-self: center;
+      grid-column: 2/3;
+  
+    }
+
+    #app-title {
+      text-decoration: underline;
+      margin-bottom: 0;
+    }
+
+    .text-message {
+      max-width: 255px;
+      word-wrap: break-word;
+      margin-bottom: 12px;
+      line-height: 24px;
+      position:relative;
+      padding:10px 20px;
+      border-radius:25px;
+    }
+
+    .text-message:before, .text-message:after {
+      content:"";
+      position:absolute;
+      bottom:-2px;
+      height:20px;
+      
+    }
+    
+    .sent-text-message {
+      color:white; 
+      background:#2FD64B;
+      align-self: flex-end;
+    }
+
+    .sent-text-message:before {
+      right:-7px;
+      border-right:20px solid #2FD64B;
+      border-bottom-left-radius: 16px 14px;
+      transform:translate(0, -2px);
+    }
+
+    .sent-text-message:after {
+      right:-56px;
+      width:26px;
+      background: black;
+      border-bottom-left-radius: 10px;
+      transform:translate(-30px, -2px);
+    }
+
+    .received-text-message {
+      background:#E5E5EA;
+      color:black;
+    }
+    .received-text-message:before {
+      left:-7px;
+      border-left:20px solid #E5E5EA;
+      border-bottom-right-radius: 16px 14px;
+      transform:translate(0, -2px);
+    }
+
+    .received-text-message:after {
+      left:4px;
+      width:26px;
+      background:black;
+      border-bottom-right-radius: 10px;
+      transform:translate(-30px, -2px);
+    }
+
+    #phone {
+      margin: 0;
+    }
+
   </style>
 </head>
 <body>
-  <h1>Recs By Text</h1> 
-    <h2>Recommend movies to your friends and ask them for recommendations all through a convenient SMS interface.</h2>
-    <h3>Getting Started</h3>
-    <p>To start a new account, text 'I am ' plus your username to 219-501-4076. Usernames cannot contain spaces.</p>
-    <p>Example: I am karl</p>
-
-    <h3>Commands</h3>
-    <p><b>List</b> - Will return your list of recommended movies. When you first sign up, this list will be empty.</p>    
-    <p>rec Ghostbusters to me - Will add a movie to your own list.</p>
-    <p>rec True Grit to josh - Will add a movie to your friend josh's list.</p> 
-
-    <p>Show + the items position in the list to see more details about an item in your list</p>
-    <p>delete + the item's position in the list to delete the recommendation. </p>
-
+  <div id='examples'>
+    <h1 id='app-title'>Recs By Text</h1>
+    <section id='sign-up'>
+      <h2>Creating an Account</h2>
+      <p>Creating an account is easy. Just text 'I am ' followed by whatever you would like your username to be to this number:</p> 
+      <p id='phone'><b >1-(301)-300-3110</b></p>
+      <p>Usernames must be one word.</p>
+      <p class='text-message sent-text-message'>I am karl</p>
+      <p class='text-message received-text-message'>karl successfully created</p>
+    </section>
+    <section id='add-to-your-list'>
+      <h2>Adding to Your Own List</h2>
+      <p>Text 'rec YOUR REC HERE to me' to add a movie to your own list. </p>
+      <p class='text-message sent-text-message'>rec Ghostbusters to me</p>
+      <p class='text-message received-text-message'>Ghostbusters was added to your list. Reply to add context.</p>
+    </section>
+    <section id='adding-context'>
+      <h2>Adding Context</h2>
+      <p>You can add some extra info about why you are making this recommendation. Simply reply to add context.</p>
+      <p class='text-message received-text-message'>Ghostbusters was added to your list. Reply to add context.</p>
+      <p class='text-message sent-text-message'>Was talking about horror comedies with Karl</p>
+      <p class='text-message received-text-message'>Context added</p>
+    </section>
+    <section id='adding-context'>
+      <h2>View Your List</h2>
+      <p>You can check your list at any time by texting 'list'. </p>
+      <p class='text-message sent-text-message'>list</p>
+      <p class='text-message received-text-message'>
+        Movies<br>
+        ---------------------<br>
+        1. Ghostbusters<br>
+        2. Fargo<br>
+        3. Eyes Without A Face<br>
+      </p>
+    </section>
+    <section id='adding-context'>
+      <h2>View A Single Recommendation</h2>
+      <p>You can text 'show' plus the number of the movie in your list to see more info including links to imdb and Rotten tomatoes.</p>
+      <p class='text-message received-text-message'>
+        Movies<br>
+        ---------------------<br>
+        1. Ghostbusters<br>
+        2. Fargo<br>
+        3. Eyes Without A Face<br>
+      </p>
+      <p class='text-message sent-text-message'>show 1</p>
+      <p class='text-message received-text-message'>
+        Ghostbusters<br>
+        ---------------------<br>
+        CONTEXT: Was talking about horror comedies with Karl <br>
+        IMDB: <a href='https://www.imdb.com/title/tt0087332/?ref_=nv_sr_1?ref_=nv_sr_1'>shritco.de/KRmZk</a><br>
+        RT: <a href='https://www.rottentomatoes.com/m/ghostbusters'>shritco.de/KRmZk</a><br>
+      </p>
+    </section>
+  <section id='adding-context'>
+      <h2>Delete</h2>
+      <p>You can delete recommendations from your list by texting 'delete' plus the number of the recommendation.</p>
+      <p class='text-message sent-text-message'>delete 1</p>
+      <p class='text-message received-text-message'>Ghostbusters was deleted from your list.</p>
+    </section>
+    <section id='making-a-recommendation-up'>
+      <h2>Making a Recommendation</h2>
+      <p>Sending a Recommendation to another user is easy. All you need is their username. Text 'rec MOVIENAME to USERNAME'</p>
+      <p class='text-message sent-text-message'>rec Princess Bride to karl123</p>
+      <p class='text-message received-text-message'>Princess Bride was recommended to karl123. Reply to add context.</p>
+      <p class='text-message sent-text-message'>RE our convo about comedies that follow the hero's journey</p>
+      <p class='text-message received-text-message'>Context added</p>
+    </section>
+    <section id='sign-up'>
+      <h2>Receiving a Recommendation</h2>
+      <p>Only trusted users can add to your list. The first time a user makes a recommendation to your list, you will be asked if you want to add them as a trusted user. Once you do, any recommendations they make in the future will be automatically added. To add a new user as trusted, you'll need to reply with a unique identifier that will always start with 'r' and be followed by a number.</p>
+      <p class='text-message received-text-message'>josh456 recommended 'Princess Bride' to you. Text back 'r55' if you would like to add this recommendation and them as a trusted user.</p>
+      <p class='text-message sent-text-message'>r55</p>
+    </section>
+  </div>
 </body>
 </html>
