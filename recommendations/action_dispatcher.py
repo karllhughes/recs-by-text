@@ -31,5 +31,7 @@ class ActionDispatcher:
             return AddContextToRecommendation.execute(action_template['payload'])
         elif action == ACTIONS_LIST['view_single_recommendation']: 
             return ViewSingleRecommendation.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['invite']:
+            return SendInvite.execute(action_template['payload'])
         else: 
             raise ValueError(f"{action_template['action']} is not a valid action.")

@@ -44,6 +44,9 @@ class SmsParser:
             response = {'action': ACTIONS_LIST['view_single_recommendation'], 'payload': {'phone': phone, 'position_in_list': position_in_list, 'session': session}}
         elif cls.is_add_context(message, session):
             response = {'action': ACTIONS_LIST['add_context'], 'payload': {'phone': phone, 'session': session, 'context': message}}
+        elif cls.is_invite(message):
+            invite_number = message[7:]
+            response = {'action': ACTIONS_LIST['invite'], 'payload': {'phone': phone, 'context': message, 'invite_number': invite_number}}
         else:
             raise ValueError('Message could not be parsed.')
         
@@ -103,3 +106,8 @@ class SmsParser:
     @exception_returns_false
     def is_view_single_recommendation(cls, message, session):
         return message[:5].lower() == 'show '
+
+    @classmethod
+    @exception_returns_false
+    def is_invite(cls, message, session):
+        return message[:7].lower() == 'invite '
