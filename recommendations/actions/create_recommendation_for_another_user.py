@@ -20,9 +20,9 @@ class CreateRecommendationForAnotherUser(BaseAction):
     @classmethod
     def send_recommendation_to_recommendee(cls, recommender, recommendee, recommendation):
         if cls.is_trusted: 
-            SmsSender.send_to_user(recommendee, f"{recommender.username} recommended '{recommendation.name}' to you.")
+            SmsSender.send_to_user(recommendee.phone, f"{recommender.username} recommended '{recommendation.name}' to you.")
         else: 
-            SmsSender.send_to_user(recommendee, f"{recommender.username} recommended '{recommendation.name}' to you. Text back 'r{recommendation.id}' if you would like to add this recommendation and them as a trusted user.")   
+            SmsSender.send_to_user(recommendee.phone, f"{recommender.username} recommended '{recommendation.name}' to you. Text back 'r{recommendation.id}' if you would like to add this recommendation and them as a trusted user.")   
 
     @classmethod
     def create_recommendation_and_save(cls, recommender, recommendee, payload):

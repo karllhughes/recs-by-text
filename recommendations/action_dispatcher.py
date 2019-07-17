@@ -8,6 +8,8 @@ from .actions.ask_from_another_user import AskFromAnotherUser
 from .actions.delete_from_list import DeleteFromList
 from .actions.add_context_to_recommendation import AddContextToRecommendation
 from .actions.view_single_recommendation import ViewSingleRecommendation
+from .actions.send_invite import SendInvite
+
 
 class ActionDispatcher: 
     @classmethod
