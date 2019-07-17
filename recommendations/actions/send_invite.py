@@ -14,7 +14,6 @@ class SendInvite(BaseAction):
             SmsSender.send_to_user(number, f"{payload['phone']} sent you an invite to Recs By Text. Visit http://recsbytext.com/ for instructions on how to sign up and start making recommendations to friends!")
             message = {'message': f"'{number}' was sent an invite to Recs By Text."}
         else:
-            number = f"+{parsed_number.country_code}{parsed_number.national_number}"
             message = {'message': f"'{number}' is not a valid phone number."}
 
         return message 
