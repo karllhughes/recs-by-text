@@ -3,8 +3,6 @@ from recommendations.sms_parser import SmsParser
 from .actions_list import ACTIONS_LIST
 
 class AnimalTestCase(TestCase):
-    def setUp(self):
-        print("Tests are running")
 
     def test_parse_is_create_new_user_when_username_is_valid(self):
         # Arrange
