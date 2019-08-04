@@ -98,7 +98,3 @@ class AnimalTestCase(TestCase):
         result = SmsParser.parse(message, self.phone, session)
 
         self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
-
-
-
-        
