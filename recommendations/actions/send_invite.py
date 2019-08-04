@@ -1,7 +1,7 @@
 from .base_action import BaseAction
 from recommendations.sms_sender import SmsSender
 import phonenumbers
-from IPython import embed
+
 
 class SendInvite(BaseAction):
 

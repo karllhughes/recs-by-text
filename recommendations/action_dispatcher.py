@@ -13,7 +13,7 @@ from .actions.send_invite import SendInvite
 
 class ActionDispatcher: 
     @classmethod
-    def dispatch(cls,action_template):
+    def dispatch(cls, action_template):
         action = action_template['action']
         if action == ACTIONS_LIST['create_user']:
             return CreateUserAction.execute(action_template['payload'])

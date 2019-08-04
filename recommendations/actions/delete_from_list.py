@@ -3,6 +3,7 @@ from .base_action import BaseAction
 
 
 class DeleteFromList(BaseAction):
+
     @classmethod
     def execute(cls, payload):
         recommendations = User.objects.get(phone=payload['phone']).recommendations_recieved.filter(accepted=True).order_by('-created_at')
