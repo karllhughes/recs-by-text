@@ -1,5 +1,4 @@
 from .actions_list import ACTIONS_LIST
-from IPython import embed
 
 def exception_returns_false(func):
     def catch_errors(cls, message, session=None):
@@ -13,7 +12,7 @@ def exception_returns_false(func):
 class SmsParser:
 
     @classmethod
-    def parse(cls,message, phone, session):
+    def parse(cls, message, phone, session):
 
         if cls.is_create_new_user(message):  
             username = message.split(' ')[-1]

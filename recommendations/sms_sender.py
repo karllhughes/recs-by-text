@@ -13,4 +13,3 @@ class SmsSender:
             to=phone
         )
         print(response)
-        
