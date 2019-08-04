@@ -25,5 +25,4 @@ class DeleteFromListTest(TestCase):
 
         # Assert
         mock_user.get().recommendations_recieved.filter().order_by().__getitem__().delete.assert_called_once()
-        print(result)
         self.assertIn("'" + name + "'", result['message'])
