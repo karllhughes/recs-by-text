@@ -17,7 +17,7 @@ class SmsParser:
         if cls.is_create_new_user(message):  
             username = message.split(' ')[-1]
             action = ACTIONS_LIST['create_user']
-            response = { 'action': action, 'payload': {'username': username, 'phone': phone, 'session': session} }
+            response = {'action': action, 'payload': {'username': username, 'phone': phone, 'session': session}}
         elif cls.is_recommendation_for_me(message):
             name = message[10:-6]
             response = {'action': ACTIONS_LIST['create_recommendation_for_me'], 'payload': {'name': name, 'phone': phone, 'session': session}}
@@ -27,7 +27,7 @@ class SmsParser:
         elif cls.is_recommendation_for_another_user(message):
             username = message.split(' ')[-1]
             name = ' '.join(message.split(' ')[1:-2])
-            response = {'action' : ACTIONS_LIST['create_recommendation_for_another_user'], 'payload' : {'name': name, 'recommender_phone': phone, 'recommendee_username': username, 'session': session} }
+            response = {'action': ACTIONS_LIST['create_recommendation_for_another_user'], 'payload' : {'name': name, 'recommender_phone': phone, 'recommendee_username': username, 'session': session}}
         elif cls.is_recommendation_acception(message):
             response = {'action': ACTIONS_LIST['accept_recommendation_from_another_user'], 'payload': {'recommendation_id': message[1:], 'phone': phone, 'session': session}}
         elif cls.is_view_list(message):

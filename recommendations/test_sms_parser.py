@@ -31,7 +31,7 @@ class SmsParserTest(TestCase):
         session = {}
 
         # Assert
-        self.assertRaises(ValueError, SmsParser.parse(message, self.phone, session))
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
 
     def test_parse_is_recommendation_for_me_when_valid(self):
         # Arrange
@@ -67,7 +67,7 @@ class SmsParserTest(TestCase):
         session = {}
 
         # Act
-        self.assertRaises(ValueError, SmsParser.parse(message, self.phone, session))
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
 
     def test_parse_is_recommendation_for_another_user_when_valid(self):
         # Arrange
@@ -110,4 +110,46 @@ class SmsParserTest(TestCase):
         session = {}
 
         # Act
-        self.assertRaises(ValueError, SmsParser.parse(message, self.phone, session))
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
+
+    def test_parse_is_recommendation_acception_when_valid(self):
+        # Arrange
+        recommendation_id = str(self.faker.pyint())
+        message = 'r' + recommendation_id
+        session = {}
+
+        # Act
+        result = SmsParser.parse(message, self.phone, session)
+
+        # Assert
+        self.assertEqual(result['action'], ACTIONS_LIST['accept_recommendation_from_another_user'])
+        self.assertEqual(result['payload']['recommendation_id'], recommendation_id)
+        self.assertEqual(result['payload']['phone'], self.phone)
+
+    def test_parse_is_recommendation_acception_when_no_recommendation_id(self):
+        # Arrange
+        message = 'r'
+        session = {}
+
+        # Assert
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
+
+    def test_parse_is_view_list_when_valid(self):
+        # Arrange
+        message = 'list'
+        session = {}
+
+        # Act
+        result = SmsParser.parse(message, self.phone, session)
+
+        # Assert
+        self.assertEqual(result['action'], ACTIONS_LIST['view_list'])
+        self.assertEqual(result['payload']['phone'], self.phone)
+
+    def test_parse_is_view_list_when_invalid(self):
+        # Arrange
+        message = 'lis t'
+        session = {}
+
+        # Assert
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
