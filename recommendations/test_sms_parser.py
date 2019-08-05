@@ -10,6 +10,10 @@ class SmsParserTest(TestCase):
         self.faker = Faker()
         self.phone = self.faker.phone_number()
 
+    def setUp(self):
+        self.faker = Faker()
+        self.phone = self.faker.phone_number()
+
     def test_parse_is_create_new_user_when_username_is_valid(self):
         # Arrange
         username = self.faker.first_name()
@@ -152,4 +156,76 @@ class SmsParserTest(TestCase):
         session = {}
 
         # Assert
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
+
+    def test_parse_is_invite(self):
+        invite_number = self.faker.phone_number()
+        message = f'invite {invite_number}'
+        session = {}
+
+        result = SmsParser.parse(message, self.phone, session)
+
+        self.assertEqual(result['action'], ACTIONS_LIST['invite'])
+        self.assertEqual(result['payload']['invite_number'], invite_number)
+
+    @skip('known issue #50')
+    def test_parse_invite_when_invalid_invite_number(self):
+        invite_number = '773 555 55'
+        message = f'invite {invite_number}'
+        session = {}
+
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
+
+    def test_parse_is_add_context(self):
+        message = ''.join(self.faker.words(5))
+        session = {'latest_recommendation_id': self.faker.pyint()}
+
+        result = SmsParser.parse(message, self.phone, session)
+
+        self.assertEqual(result['action'], ACTIONS_LIST['add_context'])
+        self.assertEqual(result['payload']['context'], message)
+        self.assertEqual(result['payload']['session'], session)
+
+    def test_parse_is_view_single_recommendation(self):
+        position = str(self.faker.pyint())
+        message = f'Show {position}'
+        session = {}
+
+        result = SmsParser.parse(message, self.phone, session)
+
+        self.assertEqual(result['action'], ACTIONS_LIST['view_single_recommendation'])
+        self.assertEqual(result['payload']['position_in_list'], position)
+
+    @skip('known issue #51')
+    def test_parse_is_view_single_recommendation_when_no_list_position(self):
+        message = f'Show '
+        session = {}
+       
+        self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
+
+    def test_parse_is_delete(self):
+        position = str(self.faker.pyint())
+        message = f'Delete {position}'
+        session = {}
+
+        result = SmsParser.parse(message, self.phone, session)
+
+        self.assertEqual(result['action'], ACTIONS_LIST['delete'])
+        self.assertEqual(result['payload']['position_in_list'], position)
+
+    def test_parse_ask_from_another_user(self):
+        askee_username = self.faker.name()
+        message = f'ask {askee_username}'
+        session = {}
+
+        result = SmsParser.parse(message, self.phone, session)
+
+        self.assertEqual(result['action'], ACTIONS_LIST['ask_from_another_user'])
+        self.assertEqual(result['payload']['askee_username'], askee_username)
+
+    @skip('known issue')
+    def test_parse_ask_from_another_user_when_no_user_name(self):
+        message = f'ask '
+        session = {}
+
         self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
