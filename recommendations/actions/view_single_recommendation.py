@@ -1,8 +1,8 @@
 from recommendations.models import User 
 from .base_action import BaseAction
-from IPython import embed
 import urllib.parse
 import requests
+
 
 class ViewSingleRecommendation(BaseAction):
     @classmethod
