@@ -3,8 +3,7 @@ from recommendations.sms_sender import SmsSender
 from .base_action import BaseAction
 
 
-class CreateRecommendationForAnotherUser(BaseAction): 
-
+class CreateRecommendationForAnotherUser(BaseAction):
 
     @classmethod
     def execute(cls, payload):
