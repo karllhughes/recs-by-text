@@ -40,9 +40,23 @@ python ./manage.py migrate
 
 The app will now be running, and you can check out the landing page at [localhost:8000](http://localhost:8000/).
 
+### Running Locally with Docker
+
+- Clone the repository and navigate to the directory (see above)
+- Run a Postgres database: `docker run --rm --name pg -e POSTGRES_PASSWORD='' -e POSTGRES_USER='postgres' -e POSTGRES_DB='moviesByPhone' -p 5432:5432 -d postgres:11`
+- Build the web app Docker Image: `docker build -t recs-by-text .`
+- Run the container: `docker run --rm -d -v $(pwd)/recommendations:/app/recommendations -p 8000:8000 --link=pg --name web recs-by-text`
+
+The first time, you'll need to run the migrations:
+
+```bash
+docker exec -it web python ./manage.py syncdata
+docker exec -it web python ./manage.py migrate
+```
+
 ## Running the tests
 
-Coming soon!
+Run the tests with `python ./manage.py test`.
 
 ### And coding style tests
 
