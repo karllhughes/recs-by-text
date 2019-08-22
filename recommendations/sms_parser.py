@@ -36,9 +36,8 @@ class SmsParser:
             response = {'action': action, 'payload': {'phone': phone, 'position_in_list': cls.matches[3], 'session': session}}
         elif cls.is_add_context(message, session):
             response = {'action': ACTIONS_LIST['add_context'], 'payload': {'phone': phone, 'session': session, 'context': message}}
-        elif cls.is_invite(message):
-            invite_number = message[7:]
-            response = {'action': ACTIONS_LIST['invite'], 'payload': {'phone': phone, 'context': message, 'invite_number': invite_number}}
+        elif action == ACTIONS_LIST['invite']:
+            response = {'action': action, 'payload': {'phone': phone, 'context': message, 'invite_number': cls.matches[1]}}
         else:
             raise ValueError('Message could not be parsed.')
         
@@ -64,6 +63,8 @@ class SmsParser:
             '^(rm|delete|remove|del) ([0-9]+)\\b.*$': ACTIONS_LIST['delete'],
             # Show a single item from your list
             '^(show?( me)*) ([0-9]+)\\b.*$': ACTIONS_LIST['view_single_recommendation'],
+            # Invite a new user by phone number
+            'invite.*?(\\(?\\d{3}\\D{0,3}\\d{3}\\D{0,3}\\d{4}).*?': ACTIONS_LIST['invite'],
         }
 
         for pattern, action_name in patterns.items():
@@ -76,8 +77,3 @@ class SmsParser:
     @exception_returns_false
     def is_add_context(cls, message, session):
         return bool(session['latest_recommendation_id'])
-
-    @classmethod
-    @exception_returns_false
-    def is_invite(cls, message, session):
-        return message[:7].lower() == 'invite '

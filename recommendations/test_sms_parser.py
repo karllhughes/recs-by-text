@@ -1,5 +1,4 @@
 from django.test import TestCase
-from unittest import skip
 from recommendations.sms_parser import SmsParser
 from .actions_list import ACTIONS_LIST
 from faker import Faker
@@ -165,7 +164,6 @@ class SmsParserTest(TestCase):
         self.assertEqual(result['action'], ACTIONS_LIST['invite'])
         self.assertEqual(result['payload']['invite_number'], invite_number)
 
-    @skip('known issue #50')
     def test_parse_invite_when_invalid_invite_number(self):
         invite_number = '773 555 55'
         message = f'invite {invite_number}'
