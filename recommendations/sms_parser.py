@@ -1,4 +1,5 @@
 from .actions_list import ACTIONS_LIST
+import re
 
 def exception_returns_false(func):
     def catch_errors(cls, message, session=None):
@@ -13,21 +14,14 @@ class SmsParser:
 
     @classmethod
     def parse(cls, message, phone, session):
+        action = cls.get_action_from_message(message)
 
-        if cls.is_create_new_user(message):  
-            username = message.split(' ')[-1]
-            action = ACTIONS_LIST['create_user']
-            response = {'action': action, 'payload': {'username': username, 'phone': phone, 'session': session}}
-        elif cls.is_recommendation_for_me(message):
-            name = message[10:-6]
-            response = {'action': ACTIONS_LIST['create_recommendation_for_me'], 'payload': {'name': name, 'phone': phone, 'session': session}}
-        elif cls.is_rec_for_me(message):
-            name = message[4:-6]
-            response = {'action': ACTIONS_LIST['create_recommendation_for_me'], 'payload': {'name': name, 'phone': phone, 'session': session}}
-        elif cls.is_recommendation_for_another_user(message):
-            username = message.split(' ')[-1]
-            name = ' '.join(message.split(' ')[1:-2])
-            response = {'action': ACTIONS_LIST['create_recommendation_for_another_user'], 'payload' : {'name': name, 'recommender_phone': phone, 'recommendee_username': username, 'session': session}}
+        if action == ACTIONS_LIST['create_user']:
+            response = {'action': action, 'payload': {'username': cls.matches[2], 'phone': phone, 'session': session}}
+        elif action == ACTIONS_LIST['create_recommendation_for_me']:
+            response = {'action': action, 'payload': {'name': cls.matches[2], 'phone': phone, 'session': session}}
+        elif action == ACTIONS_LIST['create_recommendation_for_another_user']:
+            response = {'action': action, 'payload': {'name': cls.matches[2], 'recommender_phone': phone, 'recommendee_username': cls.matches[4], 'session': session}}
         elif cls.is_recommendation_acception(message):
             response = {'action': ACTIONS_LIST['accept_recommendation_from_another_user'], 'payload': {'recommendation_id': message[1:], 'phone': phone, 'session': session}}
         elif cls.is_view_list(message):
@@ -50,32 +44,25 @@ class SmsParser:
             raise ValueError('Message could not be parsed.')
         
         return response
-    
-    @classmethod
-    @exception_returns_false
-    def is_recommendation_for_another_user(cls,message, session):
-        message_array = message.split(' ')
-        last_word = message_array[-1]
-        second_to_last_word = message_array[-2]
-        first_word = message_array[0]
-        return (first_word.lower() == 'recommend' or first_word.lower() == 'rec') and second_to_last_word.lower() == 'to' and last_word.lower() != 'me'
-       
-    @classmethod
-    @exception_returns_false
-    def is_recommendation_for_me(cls,message, session):
-        return message[:10].lower() == 'recommend ' and message[-6:].lower() == ' to me'
 
     @classmethod
     @exception_returns_false
-    def is_rec_for_me(cls,message, session):
-        return message[:4].lower() == 'rec ' and message[-6:].lower() == ' to me'
-        
-    @classmethod
-    @exception_returns_false
-    def is_create_new_user(cls,message, session):
-        return message[:5].lower() == 'i am '
-        
-    
+    def get_action_from_message(cls, message, session):
+        patterns = {
+            # Create account
+            '^(i am|call me) ([a-z0-9_]*)$': ACTIONS_LIST['create_user'],
+            # Add to my list
+            '^(recommend|rec|add) \\b(.*) (to|for) (me|my list).*$': ACTIONS_LIST['create_recommendation_for_me'],
+            # Add to another user's list
+            '^(recommend|rec|add) \\b(.*) (to|for) (?!me\\b|my list)\\b([a-z0-9_]+).*$':  ACTIONS_LIST['create_recommendation_for_another_user'],
+        }
+
+        for pattern, action_name in patterns.items():
+            matches = re.match(pattern, message, re.IGNORECASE | re.MULTILINE)
+            if matches:
+                cls.matches = matches
+                return action_name
+
     @classmethod
     @exception_returns_false
     def is_recommendation_acception(cls, message, session):
