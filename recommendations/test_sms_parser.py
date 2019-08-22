@@ -9,10 +9,6 @@ class SmsParserTest(TestCase):
         self.faker = Faker()
         self.phone = self.faker.phone_number()
 
-    def setUp(self):
-        self.faker = Faker()
-        self.phone = self.faker.phone_number()
-
     def test_parse_is_create_new_user_when_username_is_valid(self):
         # Arrange
         username = self.faker.first_name()
@@ -155,7 +151,9 @@ class SmsParserTest(TestCase):
         self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
 
     def test_parse_is_invite(self):
-        invite_number = self.faker.phone_number()
+        # Unfortunately, fakers phone numbers have extensions, which we don't support for now
+        # invite_number = self.faker.phone_number()
+        invite_number = '999-555-3322'
         message = f'invite {invite_number}'
         session = {}
 
