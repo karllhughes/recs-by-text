@@ -21,6 +21,7 @@ pickleshare==0.7.5
 prompt-toolkit==2.0.9
 psycopg2==2.8.2
 ptyprocess==0.6.0
+pycodestyle==2.3.1
 Pygments==2.4.0
 PyJWT==1.7.1
 PySocks==1.7.0

@@ -60,7 +60,7 @@ Run the tests with `python ./manage.py test`.
 
 ### And coding style tests
 
-Coming soon!
+Find style inconsistencies with `pycodestyle --show-pep8 recommendations`
 
 ## Contributing
 
