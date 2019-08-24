@@ -13,7 +13,6 @@ class AskFromAnotherUser(BaseAction):
         if not asker.does_trust(askee):
             TrustedUser.objects.create(original_user=asker, trusted_user=askee)
 
-    
         SmsSender.send_to_user(askee.phone, f"{asker.username} asked for a recommendation. To send one, text 'recommend XXXX to {asker.username}'.")
         super().clear_recommendation_id(payload['session'])
 
