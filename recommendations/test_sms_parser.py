@@ -192,7 +192,7 @@ class SmsParserTest(TestCase):
     def test_parse_is_view_single_recommendation_when_no_list_position(self):
         message = f'Show '
         session = {}
-       
+
         self.assertRaises(ValueError, SmsParser.parse, message, self.phone, session)
 
     def test_parse_is_delete(self):
