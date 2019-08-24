@@ -6,7 +6,8 @@ class CreateUserAction(BaseAction):
     
     @classmethod
     def execute(cls, payload):
-        user = User(**payload)
+
+        user = User(username=payload['username'], phone=payload['phone'])
         user.full_clean()
         user.save()
         super().clear_recommendation_id(payload['session'])

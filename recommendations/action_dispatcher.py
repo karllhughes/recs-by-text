@@ -8,10 +8,12 @@ from .actions.ask_from_another_user import AskFromAnotherUser
 from .actions.delete_from_list import DeleteFromList
 from .actions.add_context_to_recommendation import AddContextToRecommendation
 from .actions.view_single_recommendation import ViewSingleRecommendation
+from .actions.send_invite import SendInvite
+
 
 class ActionDispatcher: 
     @classmethod
-    def dispatch(cls,action_template):
+    def dispatch(cls, action_template):
         action = action_template['action']
         if action == ACTIONS_LIST['create_user']:
             return CreateUserAction.execute(action_template['payload'])
@@ -31,5 +33,7 @@ class ActionDispatcher:
             return AddContextToRecommendation.execute(action_template['payload'])
         elif action == ACTIONS_LIST['view_single_recommendation']: 
             return ViewSingleRecommendation.execute(action_template['payload'])
+        elif action == ACTIONS_LIST['invite']:
+            return SendInvite.execute(action_template['payload'])
         else: 
             raise ValueError(f"{action_template['action']} is not a valid action.")

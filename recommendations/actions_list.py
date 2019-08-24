@@ -7,5 +7,6 @@ ACTIONS_LIST = {
   'ask_from_another_user': 'ask another user for a recommendation',
   'delete' : 'delete a movie from my list', 
   'add_context' : 'add some extra info about your recommendation', 
-  'view_single_recommendation' : 'show page for recommendation'
+  'view_single_recommendation' : 'show page for recommendation',
+  'invite' : 'invite a friend',
 }
