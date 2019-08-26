@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recommendations',
     'django_extensions',
-    'moviesByPhone'
+    'moviesByPhone', 
+    'moviesImporter',
 ]
 
 MIDDLEWARE = [
