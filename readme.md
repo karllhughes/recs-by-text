@@ -40,6 +40,17 @@ python ./manage.py migrate
 
 The app will now be running, and you can check out the landing page at [localhost:8000](http://localhost:8000/).
 
+#### Importing Movies
+
+You can import movies from the IMDB [data dump found here](https://datasets.imdbws.com/). This data is used to recommend new
+movies to users based on their existing list.
+
+- Download and unzip the `title.basics.tsv` and `title.crew.tsv` files
+- Copy them into the `moviesImporter/data_to_import` directory
+- Run the import script: `python ./manage.py runscript importer`
+
+You should see a summary of the number of movies imported and the time taken (~2 minutes).
+
 ### Running Locally with Docker
 
 - Clone the repository and navigate to the directory (see above)
