@@ -1,12 +1,11 @@
-from recommendations.models import User 
+from recommendations.models import User
 from .base_action import BaseAction
 
 
-class CreateUserAction(BaseAction): 
-    
+class CreateUserAction(BaseAction):
+
     @classmethod
     def execute(cls, payload):
-
         user = User(username=payload['username'], phone=payload['phone'])
         user.full_clean()
         user.save()

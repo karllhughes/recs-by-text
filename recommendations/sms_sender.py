@@ -1,10 +1,10 @@
 from twilio.rest import Client
 import os
 
-class SmsSender:
 
+class SmsSender:
     client = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
-    
+
     @classmethod
     def send_to_user(cls, phone, message):
         response = cls.client.messages.create(

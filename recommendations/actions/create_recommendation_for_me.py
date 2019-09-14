@@ -2,7 +2,7 @@ from recommendations.models import Recommendation, User
 from .base_action import BaseAction
 
 
-class CreateRecommendationForMe(BaseAction): 
+class CreateRecommendationForMe(BaseAction):
 
     @classmethod
     def execute(cls, payload):
