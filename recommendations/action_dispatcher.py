@@ -11,13 +11,13 @@ from .actions.view_single_recommendation import ViewSingleRecommendation
 from .actions.send_invite import SendInvite
 
 
-class ActionDispatcher: 
+class ActionDispatcher:
     @classmethod
     def dispatch(cls, action_template):
         action = action_template['action']
         if action == ACTIONS_LIST['create_user']:
             return CreateUserAction.execute(action_template['payload'])
-        elif action == ACTIONS_LIST['create_recommendation_for_me']: 
+        elif action == ACTIONS_LIST['create_recommendation_for_me']:
             return CreateRecommendationForMe.execute(action_template['payload'])
         elif action == ACTIONS_LIST['create_recommendation_for_another_user']:
             return CreateRecommendationForAnotherUser.execute(action_template['payload'])
@@ -31,9 +31,9 @@ class ActionDispatcher:
             return DeleteFromList.execute(action_template['payload'])
         elif action == ACTIONS_LIST['add_context']:
             return AddContextToRecommendation.execute(action_template['payload'])
-        elif action == ACTIONS_LIST['view_single_recommendation']: 
+        elif action == ACTIONS_LIST['view_single_recommendation']:
             return ViewSingleRecommendation.execute(action_template['payload'])
         elif action == ACTIONS_LIST['invite']:
             return SendInvite.execute(action_template['payload'])
-        else: 
+        else:
             raise ValueError(f"{action_template['action']} is not a valid action.")

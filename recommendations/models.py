@@ -4,22 +4,23 @@ from django.core.exceptions import ObjectDoesNotExist
 from moviesImporter.models import Movie
 
 
+
 class User(models.Model):
     username = models.CharField(validators=[MinLengthValidator(3)], max_length=200, unique=True)
-    phone  = models.CharField(max_length=15, unique=True)
+    phone = models.CharField(max_length=15, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.username
 
     def does_trust(self, another_user):
-        try: 
+        try:
             return bool(TrustedUser.objects.get(original_user=self, trusted_user=another_user))
         except ObjectDoesNotExist as e:
             return False
-        
+
     def is_trusted_by(self, another_user):
-        try: 
+        try:
             return bool(TrustedUser.objects.get(original_user=another_user, trusted_user=self))
         except ObjectDoesNotExist as e:
             return False
