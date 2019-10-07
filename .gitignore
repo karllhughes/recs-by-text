@@ -4,4 +4,4 @@ __pycache__/
 *.py[cod]
 .secrets
 .DS_Store
-./data
+data/

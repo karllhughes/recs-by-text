@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from moviesImporter.models import Movie
 
 
-
 class User(models.Model):
     username = models.CharField(validators=[MinLengthValidator(3)], max_length=200, unique=True)
     phone = models.CharField(max_length=15, unique=True)
@@ -39,9 +38,10 @@ class Recommendation(models.Model):
         return self.name
 
 
-class TrustedUser(models.Model): 
+class TrustedUser(models.Model):
     original_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     trusted_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='trusted_user')
     created_at = models.DateTimeField(auto_now_add=True)
 
-from .signals import recommendation_pre_save
+
+from .signals import recommendation_pre_save # noqa
