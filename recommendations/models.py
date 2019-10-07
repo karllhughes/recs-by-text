@@ -44,4 +44,4 @@ class TrustedUser(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-from .signals import recommendation_pre_save # noqa
+from .signals import recommendation_pre_save  # noqa
