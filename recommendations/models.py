@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.core.exceptions import ObjectDoesNotExist
+from moviesImporter.models import Movie
 
 
 class User(models.Model):
@@ -31,6 +32,7 @@ class Recommendation(models.Model):
     context = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     accepted = models.BooleanField(default=False)
+    movie = models.ForeignKey(Movie, blank=True, null=True, on_delete=models.SET_NULL, related_name='movie')
 
     def __str__(self):
         return self.name
@@ -40,3 +42,6 @@ class TrustedUser(models.Model):
     original_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     trusted_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='trusted_user')
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+from .signals import recommendation_pre_save  # noqa
